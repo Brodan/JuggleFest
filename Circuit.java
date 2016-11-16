@@ -18,35 +18,31 @@ public class Circuit{
 	/* Place a juggler onto this circuit's team. If team's size has exceeded, player with 
 	 * lowest dot product is removed from team.
 	 */
-	public String addMember(Juggler j){
-		if(team.size() < 6){
+	public String addMember(Juggler j, int maxTeamSize){
+		String result;
+		if(team.size() < maxTeamSize){
 		 	team.add(j);
-		 	return j.getName();
+		 	result = "SUCCESS";
 		}
 		else{
-			int lowest = ;//get lowest scoring
+		 	int lowestScore = j.getPreferanceScore(name);
+		 	int jugglerIndex = -1;
+			result = j.getName();
 			for(Juggler juggler : team){
-				
-			}
-			team.remove();
-			return .getName();
+		 		int currentScore = juggler.getPreferanceScore(name);
+		 		if(currentScore < lowestScore){
+		 			result = juggler.getName();
+		 			lowestScore = currentScore;
+		 			jugglerIndex = team.indexOf(juggler);
+		 		}
+		 	}
+		 	if(jugglerIndex != -1){
+				team.remove(jugglerIndex);
+				team.add(j);
+		 	}
 		}
-		// return name of juggler removed from team, 
-		// or name of juggler added if team.size < 6
-		
+		return(result);
 	}
-
-	// public void removeMember(Juggler j){
-	// 	team.remove(j);
-	// }
-
-	// public int dotProduct(Juggler j){
-	// 	return(
-	// 		h * j.getCoordination() +
-	// 		e * j.getEndurance() +
-	// 		p * j.getPizzazz()
-	// 		);
-	// }
 
 	public String getName(){
 		return name;

@@ -59,21 +59,30 @@ public class Juggle{
 	}
 
 	public void match(){
-		while(!jugglers.isEmpty()){
-			int circ = Integer.parseInt(jugglers.get(0).getFirstPreferance().substring(1));
-			// Try to add juggler to circuit:
-			// if circuit has 6 people,
-			String result = circuits.get(circ).addMember(jugglers.get(0));
-				if result.equals(jugglers.get(0).getName()){
-					//juggler added to team of less than 6
-					jugglers.remove(0);
-				}
-				else{
+		for(Juggler juggler : jugglers){
+			addToTeam(juggler);
+		}
+	}
 
+	public void addToTeam(Juggler j){
+		try{
+			String circName = j.getFirstPreferance();
+			int circNum = Integer.parseInt(circName.substring(1));
+			String result = circuits.get(circNum).addMember(j, jugglersPerCircuit);
+			if(!result.equals("SUCCESS")){
+				int droppedJuggler = Integer.parseInt(result.substring(1));
+				jugglers.get(droppedJuggler).removePreferance(circName);
+				addToTeam(jugglers.get(droppedJuggler));
+			}
+		}
+		catch(java.util.NoSuchElementException e){
+			for(Circuit circuit: circuits){
+				if(circuit.getTeamSize() < jugglersPerCircuit){
+					circuit.addMember(j, jugglersPerCircuit);
+					break;
 				}
-				// find and remove weakest member of circuit
-				//if juggler is worse than all 6 members of team
-					//remove first preference and try next
+				
+			}
 		}
 	}
 
