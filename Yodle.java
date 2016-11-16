@@ -24,7 +24,9 @@ public class Yodle{
         	/*Pass the argument file into a Juggle object.*/
             Juggle juggle = new Juggle(args[0]);
             juggle.parseInput();
-            juggle.output();
+            juggle.match();
+            juggle.writeOutput();
+            juggle.printEmailAddress();
         }
 		
 		/*Exit program successfully.*/

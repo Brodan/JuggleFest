@@ -1,53 +1,39 @@
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Juggler{
 	private String name;
-	private int h;
-	private int e;
-	private int p;
-	private ArrayList<Map> circuitPreferances = new ArrayList<Map>();
-	//private ArrayList<String> circuitPreferances = new ArrayList<String>();
-	private ArrayList<Integer> preferenceScores = new ArrayList<Integer>();
+	private Map<String, Integer> circuitPreferances = new LinkedHashMap<String, Integer>();
+
 
 	/*Constructor */
-	public Juggler(String name, String coordination, String endurance, String pizzazz, String circuits){
+	public Juggler(String name, Map<String, Integer> circuitPreferances){
 		this.name = name;
-		h = Integer.parseInt(coordination.substring(2));
-		e = Integer.parseInt(endurance.substring(2));
-		p = Integer.parseInt(pizzazz.substring(2));
-		/*Wow, this works.*/
-		for(String item : circuits.split("[,]")){
-			Map<String, Integer> map = new HashMap<String, Integer>();
-			circuitPreferances.add(map);
-		}
+		this.circuitPreferances = circuitPreferances;
 	}
 
-	public int getCoordination(){
-		return h;
+	public String getName(){
+		return name;
 	}
 
-	public int getEndurance(){
-		return e;
+	/* Return first circuit from a Juggler's preference list.*/
+	public String getFirstPreferance(){
+		return(circuitPreferances.entrySet().iterator().next().getKey()); //C0
 	}
 
-	public int getPizzazz(){
-		return p;
-	}
-
-	/* Return specific circuit number from a Juggler's preference list.*/
-	public int getCircuit(int i){
-		return(circuitPreferances.get(i));
-	}
-
-	public void setPreference(int i){
-		//Integer.parseInt(item.substring(1))
+	public void removeFirstPreferance(String circuit){
+		circuitPreferances.remove(circuit);
 	}
 
 	/*Print a juggler in following format:
 	  J6 C2:128 C1:31 C0:188.*/
 	public String toString(){
-		return("" + name);
+		String output = name;
+		for(Map.Entry<String, Integer> preference : circuitPreferances.entrySet()){
+			output += " " + preference.getKey() + ":" + preference.getValue();
+		}
+		return(output);
 	}
 }
