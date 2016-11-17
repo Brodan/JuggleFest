@@ -3,12 +3,14 @@ import java.util.LinkedHashMap;
 
 public class Juggler{
 	private String name;
-	private Map<String, Integer> circuitPreferances = new LinkedHashMap<String, Integer>();
+	private Map<String, Integer> circuitPreferances;
+	private Map<String, Integer> originalPreferances;
 
 	/*Constructor */
 	public Juggler(String name, Map<String, Integer> circuitPreferances){
 		this.name = name;
-		this.circuitPreferances = circuitPreferances;
+		this.circuitPreferances = new LinkedHashMap<String, Integer>(circuitPreferances);
+		this.originalPreferances =  new LinkedHashMap<String, Integer>(circuitPreferances);
 	}
 
 	public String getName(){
@@ -22,8 +24,7 @@ public class Juggler{
 		}
 		catch(java.lang.NullPointerException e){
 			return(0);
-		}
-		
+		}		
 	}
 
 	/* Return first circuit from a Juggler's preference list.*/
@@ -40,7 +41,7 @@ public class Juggler{
 	  J6 C2:128 C1:31 C0:188.*/
 	public String toString(){
 		String output = name;
-		for(Map.Entry<String, Integer> preference : circuitPreferances.entrySet()){
+		for(Map.Entry<String, Integer> preference : originalPreferances.entrySet()){
 			output += " " + preference.getKey() + ":" + preference.getValue();
 		}
 		return(output);

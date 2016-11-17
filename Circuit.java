@@ -75,7 +75,10 @@ public class Circuit{
 	public String toString(){
 		String output = name;
 		for(Juggler juggler : team){
-			output += " " + juggler.toString() + ",";
+			output += " " + juggler.toString();
+			if(team.indexOf(juggler) < team.size()-1){
+				output += ",";
+			}
 		}
 		return(output + "\n");
 	}
