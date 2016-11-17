@@ -65,7 +65,7 @@ public class Circuit{
 	public String getEmail(){
 		int sum = 0;
 		for(Juggler juggler : team){
-			sum += juggler.getPreferanceScore(name);
+			sum += Integer.parseInt(juggler.getName().substring(1));
 		}
 		return(Integer.toString(sum));
 	}
