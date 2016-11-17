@@ -1,11 +1,11 @@
-	import java.util.List;
+import java.util.List;
 import java.util.ArrayList;
 
 public class Circuit{
-	private String name; //C0
-	private int h; //10
-	private int e; //8 
-	private int p; //10
+	private String name;
+	private int h;
+	private int e; 
+	private int p;
 	private ArrayList<Juggler> team = new ArrayList<Juggler>();
 
 	public Circuit(String name, String coordination, String endurance, String pizzazz){
@@ -16,7 +16,8 @@ public class Circuit{
 	}
 
 	/* Place a juggler onto this circuit's team. If team's size has exceeded, player with 
-	 * lowest dot product is removed from team.
+	 * lowest dot product is removed from team. If player being added is worse than all players
+	 * on team, do not add him.
 	 */
 	public String addMember(Juggler j, int maxTeamSize){
 		String result;
@@ -29,23 +30,19 @@ public class Circuit{
 		 	int jugglerIndex = -1;
 			result = j.getName();
 			for(Juggler juggler : team){
-		 		int currentScore = juggler.getPreferanceScore(name);
-		 		if(currentScore < lowestScore){
-		 			result = juggler.getName();
-		 			lowestScore = currentScore;
-		 			jugglerIndex = team.indexOf(juggler);
-		 		}
-		 	}
-		 	if(jugglerIndex != -1){
+				int currentScore = juggler.getPreferanceScore(name);
+				if(currentScore < lowestScore){
+					lowestScore = currentScore;
+					jugglerIndex = team.indexOf(juggler);
+					result = juggler.getName();
+				}
+			}
+			if(jugglerIndex != -1){
 				team.remove(jugglerIndex);
 				team.add(j);
-		 	}
+			}
 		}
 		return(result);
-	}
-
-	public String getName(){
-		return name;
 	}
 
 	public int getCoordination(){
@@ -62,6 +59,15 @@ public class Circuit{
 
 	public int getTeamSize(){
 		return team.size();
+	}
+
+	/* Calculate the sum of the names of the team members and return as string. */
+	public String getEmail(){
+		int sum = 0;
+		for(Juggler juggler : team){
+			sum += juggler.getPreferanceScore(name);
+		}
+		return(Integer.toString(sum));
 	}
 
 	/* Print a circuit in the following format:

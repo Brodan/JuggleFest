@@ -1,8 +1,6 @@
 /*
 	This program is my attempt to solve Yodle's
-	"Juggle Fest" coding challenge as part of the
-	"Yodle Juggler Raffle".
-	Date: 8/20/16
+	"Juggle Fest" coding challenge.
 	Author: Christopher Hranj
 */
 
@@ -20,17 +18,14 @@ public class Yodle{
             System.out.println("No file was given. Exiting...");
             System.exit(0);
         }
-        else {
-        	/*Pass the argument file into a Juggle object.*/
-            Juggle juggle = new Juggle(args[0]);
-            juggle.parseInput();
-            juggle.match();
-            juggle.writeOutput();
-            juggle.printEmailAddress();
-        }
+        /*Pass the argument file into a Juggle object.*/
+        Juggle juggle = new Juggle(args[0]);
+        juggle.parseInput();
+        juggle.match();
+        juggle.writeOutput();
+        juggle.printEmailAddress();
 		
 		/*Exit program successfully.*/
-		System.out.println("Program exiting...");
 		System.exit(0);
 	}
 }

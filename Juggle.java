@@ -5,13 +5,11 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.LinkedHashMap;
 
-/*Juggle class will parse the input file and build appropriate objects from it.
-  It will also create the output file. */
+/* Juggle class will parse the input file and build appropriate objects from it.
+ * It will then place juggler's onto circuits and create the output file. */
 public class Juggle{
 	private Scanner sc;
 	private File outputFile;
-	//private Map<String, Circuit> circuits = new LinkedHashMap<String, Circuit>();
-	//private Map<String, Juggler> jugglers = new LinkedHashMap<String, Juggler>();
 	private ArrayList<Juggler> jugglers = new ArrayList<Juggler>();
 	private ArrayList<Circuit> circuits = new ArrayList<Circuit>();
 	private int jugglersPerCircuit;
@@ -38,8 +36,6 @@ public class Juggle{
 				int e = Integer.parseInt(sc.next().substring(2));
 				int p = Integer.parseInt(sc.next().substring(2));
 				String circuitPreferances = sc.next();
-				//ArrayList of Pairs
-				//ArrayList<Map<String, Integer>> prefs = new ArrayList<Map<String, Integer>>();
 				Map<String, Integer> prefs = new LinkedHashMap<String, Integer>();
 
 				for(String preferance : circuitPreferances.split("[,]")){
@@ -50,7 +46,6 @@ public class Juggle{
 									 p * circuits.get(circuitNum).getPizzazz();
 					prefs.put(preferance, dotProduct);
 				}
-				//Juggler j = new Juggler(sc.next(), sc.next(), sc.next(), sc.next(), sc.next());
 			 	Juggler j = new Juggler(name, prefs);
 			 	jugglers.add(j);
 			}
@@ -65,6 +60,9 @@ public class Juggle{
 	}
 
 	public void addToTeam(Juggler j){
+		/* If a juggler's preferance list is empty, 
+		 * a NoSuchElementException will be raised.
+		 */
 		try{
 			String circName = j.getFirstPreferance();
 			int circNum = Integer.parseInt(circName.substring(1));
@@ -75,20 +73,19 @@ public class Juggle{
 				addToTeam(jugglers.get(droppedJuggler));
 			}
 		}
+		/* Handle exception by placing juggler on first team that is not full. */
 		catch(java.util.NoSuchElementException e){
 			for(Circuit circuit: circuits){
 				if(circuit.getTeamSize() < jugglersPerCircuit){
 					circuit.addMember(j, jugglersPerCircuit);
 					break;
 				}
-				
 			}
 		}
 	}
 
 	public void printEmailAddress(){
-		System.out.println(circuits.get(1970));
-		System.out.println("@yodle.com");
+		System.out.println(circuits.get(1970).getEmail() + "@yodle.com");
 	}
 
 	public void writeOutput(){
